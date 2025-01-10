@@ -1,0 +1,127 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    padding: 20px 0;
+}
+
+#searchInput {
+    width: 40%;
+    padding: 10px;
+    margin: 20px auto;
+    display: block;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin: 10px auto;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#results {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+    padding: 0 20px;
+}
+
+/* Card Styles */
+.result-item {
+    background-color: white;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    padding: 15px;
+    width: 250px;
+    border-radius: 8px;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.result-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.result-item h3 {
+    color: #007bff;
+    margin-top: 0;
+}
+
+.result-item p {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #555;
+}
+
+/* Image Styles */
+.part-image {
+    /* Remove width: 100% */
+    /* Remove height: auto */
+    border-radius: 5px;
+    margin-bottom: 10px;
+    display: block; /* Makes the image a block-level element */
+    margin-left: auto; /* Centers the image horizontally */
+    margin-right: auto; /* Centers the image horizontally */
+    max-width: 100%; /* Prevents the image from overflowing */
+}
+
+/* Make the image on the search result card smaller */
+.result-item .part-image {
+    max-height: 150px; /* Adjust as needed */
+}
+
+/* Detailed View Styles */
+.part-details {
+    background-color: white;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    padding: 20px;
+    width: 50%;
+    max-width: 600px;
+    border-radius: 8px;
+}
+
+.part-details h2 {
+    color: #007bff;
+    margin-top: 0;
+}
+
+.part-details .part-image {
+    max-height: 250px;
+    float: right;
+    margin-left: 20px;
+}
+
+.part-details button {
+    margin-top: 20px;
+}
+
+/* Message Styling */
+#results p {
+    text-align: center;
+    width: 100%;
+    font-size: 16px;
+    color: #777;
+}
