@@ -71,8 +71,8 @@
                 const resultItem = document.createElement('div');
                 resultItem.classList.add('result-item');
 
-                // Construct image path based on component number
-                const imagePath = `images/${part["No."]}.jpg`; // Assuming .jpg extension
+                // Construct image path based on component number and "All" folder
+                const imagePath = `All/${part["No."]}.jpg`;
 
                 // Construct the inner HTML of the card
                 let cardContent = `
@@ -90,8 +90,8 @@
         }
 
         function showPartDetails(part) {
-            // Construct image path based on component number
-            const imagePath = `images/${part["No."]}.jpg`; // Assuming .jpg extension
+            // Construct image path based on component number and "All" folder
+            const imagePath = `All/${part["No."]}.jpg`;
 
             resultsDiv.innerHTML = `
                 <div class="part-details">
