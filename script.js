@@ -1,93 +1,93 @@
 let parts = [];
-        const resultsDiv = document.getElementById('results');
+const resultsDiv = document.getElementById('results');
 
-        console.log("Fetching data.json");
-        resultsDiv.innerHTML = "<p>Loading...</p>";
+console.log("Fetching data.json");
+resultsDiv.innerHTML = "<p>Loading...</p>";
 
-        fetch('data.json')
-            .then(response => response.json())
-            .then(data => {
-                parts = data;
-                console.log("Parts data loaded:", parts);
-                resultsDiv.innerHTML = "";
+// Fetch from the correct path
+fetch('data.json') 
+    .then(response => response.json())
+    .then(data => {
+        parts = data;
+        console.log("Parts data loaded:", parts);
+        resultsDiv.innerHTML = "";
 
-                document.getElementById('searchInput').addEventListener('keyup', function(event) {
-                    if (event.key === 'Enter') {
-                        searchParts();
-                    }
-                });
-
-                document.querySelector('button').addEventListener('click', searchParts);
-            })
-            .catch(error => {
-                console.error('Error loading part data:', error);
-                resultsDiv.innerHTML = "<p>Error loading data. Please try again later.</p>";
-            });
-
-        function searchParts() {
-            console.log("searchParts function called!");
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            console.log("search term: " + searchTerm);
-            resultsDiv.innerHTML = ''; // Clear previous results
-
-            if (!searchTerm) {
-                resultsDiv.innerHTML = "<p>Please enter a search term.</p>";
-                return;
+        document.getElementById('searchInput').addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                searchParts();
             }
+        });
 
-            const filteredParts = parts.filter(part => {
-                return (
-                    part["No."].toLowerCase().includes(searchTerm) ||
-                    part["Description"].toLowerCase().includes(searchTerm)
-                );
-            });
-            console.log("filtered parts: ", filteredParts);
+        document.querySelector('button').addEventListener('click', searchParts);
+    })
+    .catch(error => {
+        console.error('Error loading part data:', error);
+        resultsDiv.innerHTML = "<p>Error loading data. Please try again later.</p>";
+    });
 
-            if (filteredParts.length === 0) {
-                resultsDiv.innerHTML = "<p>No parts found matching your search criteria.</p>";
-                return;
-            }
+function searchParts() {
+    console.log("searchParts function called!");
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+    console.log("search term: " + searchTerm);
+    resultsDiv.innerHTML = ''; // Clear previous results
 
-            // Create and display result cards
-            createResultCards(filteredParts);
-        }
+    if (!searchTerm) {
+        resultsDiv.innerHTML = "<p>Please enter a search term.</p>";
+        return;
+    }
 
-        function createResultCards(parts) {
-            parts.forEach(part => {
-                const resultItem = document.createElement('div');
-                resultItem.classList.add('result-item');
+    const filteredParts = parts.filter(part => {
+        return (
+            part["No."].toLowerCase().includes(searchTerm) ||
+            part["Description"].toLowerCase().includes(searchTerm)
+        );
+    });
+    console.log("filtered parts: ", filteredParts);
 
-                // Construct the inner HTML of the card
-                let cardContent = `
-                    <h3>${part["Shelf No."]}</h3>
-                    <p><strong>Component Number:</strong> ${part["No."]}</p>
-                    <p><strong>Description:</strong> ${part["Description"]}</p>
-                    <p><strong>Inventory:</strong> ${part["Inventory"]}</p>
-                `;
+    if (filteredParts.length === 0) {
+        resultsDiv.innerHTML = "<p>No parts found matching your search criteria.</p>";
+        return;
+    }
 
-                // Check if image exists and add it to the card content
-                const imagePath = `images/${part["No."]}.jpg`; // Assuming .jpg for all images
-                
-                cardContent += `<img src="${imagePath}" alt="${part["Description"]}" class="part-image" onerror="this.style.display='none'">`;
-                
+    // Create and display result cards
+    createResultCards(filteredParts);
+}
 
-                resultItem.innerHTML = cardContent;
-                resultItem.addEventListener('click', () => showPartDetails(part));
-                resultsDiv.appendChild(resultItem);
-            });
-        }
+function createResultCards(parts) {
+    parts.forEach(part => {
+        const resultItem = document.createElement('div');
+        resultItem.classList.add('result-item');
 
-        function showPartDetails(part) {
-            const imagePath = `images/${part["No."]}.jpg`; // Assuming .jpg for all images
+        
+        const imagePath = `All/${part["No."]}.jpg`; // Path to images
 
-            resultsDiv.innerHTML = `
-                <div class="part-details">
-                    <h2>${part["Shelf No."]}</h2>
-                    <img src="${imagePath}" alt="${part["Description"]}" class="part-image" onerror="this.style.display='none'">
-                    <p><strong>Component Number:</strong> ${part["No."]}</p>
-                    <p><strong>Description:</strong> ${part["Description"]}</p>
-                    <p><strong>Inventory:</strong> ${part["Inventory"]}</p>
-                    <button onclick="searchParts()">Back to Search Results</button>
-                </div>
-            `;
-        }
+        // Construct the inner HTML of the card
+        let cardContent = `
+            <h3>${part["Shelf No."]}</h3>
+            <p><strong>Component Number:</strong> ${part["No."]}</p>
+            <p><strong>Description:</strong> ${part["Description"]}</p>
+            <p><strong>Inventory:</strong> ${part["Inventory"]}</p>
+            <img src="${imagePath}" alt="${part["Description"]}" class="part-image" onerror="this.style.display='none';">
+        `;
+
+        resultItem.innerHTML = cardContent;
+        resultItem.addEventListener('click', () => showPartDetails(part));
+        resultsDiv.appendChild(resultItem);
+    });
+}
+
+function showPartDetails(part) {
+    // Construct image path based on component number
+    const imagePath = `All/${part["No."]}.jpg`; // Path to images
+
+    resultsDiv.innerHTML = `
+        <div class="part-details">
+            <h2>${part["Shelf No."]}</h2>
+            <img src="${imagePath}" alt="${part["Description"]}" class="part-image" onerror="this.style.display='none';">
+            <p><strong>Component Number:</strong> ${part["No."]}</p>
+            <p><strong>Description:</strong> ${part["Description"]}</p>
+            <p><strong>Inventory:</strong> ${part["Inventory"]}</p>
+            <button onclick="searchParts()">Back to Search Results</button>
+        </div>
+    `;
+}
